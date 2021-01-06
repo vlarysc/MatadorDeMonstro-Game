@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <title>Matador de Monstro</title>
+    <audio src="./music/Bog-Creatures-On-the-Move.mp3" autoplay loop></audio>
+</head>
+
+<body background="./img/x1080.jpg">
+    <div id="projeto">
+        <div class="container vidas">
+            <div class="unidades">
+                <h1>&#129497; Jogador</h1>
+                <div class="barra">
+                    <div class="vida" :class="{critica: vjogador < 20}" :style="{width: vjogador + '%'}"></div>
+                </div>
+                <div> {{ vjogador }} HP </div>
+            </div>
+            <div class="unidades">
+                <h1>&#128126; Monstro</h1>
+                <div class="barra">
+                    <div class="vida" :class="{critica: vmonstro < 20}" :style="{width: vmonstro + '%'}"></div>
+                </div>
+                <div> {{ vmonstro }} HP </div>
+            </div>
+        </div>
+        <div v-if="hasResult" class="container result">
+            <div v-if="vmonstro == 0" class="win">Você Ganhou!!! &#129321; </div>
+            <div v-else="vjogador == 0" class="lose">Você Perdeu! &#129402; </div>
+        </div>
+        <div class="container botao">
+            <template v-if="jogar">
+                <button @click="ataque(false)" class="btn ataque">ATAQUE</button>
+                <button @click="ataque(true)" class="btn ataque-especial">ATAQUE ESPECIAL</button>
+                <button @click="curarMachucar" class="btn curar">CURAR</button>
+                <button @click="jogar = false" class="btn desistir">DESISTIR</button>
+            </template>
+            <button v-else @click="novoJogo" class="btn novo-jogo">NOVO JOGO</button>
+        </div>
+        <div v-if="logs.length" class="container historico">
+            <ul>
+                <li v-for="log in logs" :class="log.cls" class="log">{{ log.text }}</li>
+            </ul>
+        </div>
+    </div>
+    <script src="ap.js"></script>
+</body>
+
+</html>
